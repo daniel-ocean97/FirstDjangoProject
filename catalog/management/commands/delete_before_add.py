@@ -1,8 +1,9 @@
 from django.core.management.base import BaseCommand
 from catalog.models import Product, Category
 
+
 class Command(BaseCommand):
-    help = 'Delete data'
+    help = "Delete data"
 
     def handle(self, *args, **options):
         # Удаляем существующие записи

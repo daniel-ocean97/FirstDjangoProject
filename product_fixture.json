@@ -1,0 +1,67 @@
+[
+{
+    "model": "catalog.product",
+    "pk": 10,
+    "fields": {
+        "name": "IPhone 17",
+        "description": "Флагманский смартфоны компании Apple",
+        "image": "",
+        "category": 1,
+        "price": 100000,
+        "created_at": "2025-05-21",
+        "updated_at": "2025-05-21"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 11,
+    "fields": {
+        "name": "Samsung s25",
+        "description": "Флагманский телефон компании Samsung",
+        "image": "",
+        "category": 1,
+        "price": 100000,
+        "created_at": "2025-05-21",
+        "updated_at": "2025-05-21"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 12,
+    "fields": {
+        "name": "Пылесос",
+        "description": "Поможет поддержать чистоту в доме",
+        "image": "",
+        "category": 2,
+        "price": 14000,
+        "created_at": "2025-05-21",
+        "updated_at": "2025-05-21"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 13,
+    "fields": {
+        "name": "Стиральная машина",
+        "description": "Постирает вашу одежду",
+        "image": "",
+        "category": 2,
+        "price": 30000,
+        "created_at": "2025-05-21",
+        "updated_at": "2025-05-21"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 14,
+    "fields": {
+        "name": "Посудомоечная машина",
+        "description": "Помоет за вас вашу посуду",
+        "image": "",
+        "category": 2,
+        "price": 25000,
+        "created_at": "2025-05-21",
+        "updated_at": "2025-05-21"
+    }
+}
+]

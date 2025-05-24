@@ -3,15 +3,19 @@ from catalog.models import Product
 
 
 def show_home(request):
-    return render(request, "home.html")
+    products = Product.objects.all()
+    context = {
+        "products": products
+    }
+    return render(request, "home.html", context)
 
 
 def show_contacts(request):
     return render(request, "contacts.html")
 
 
-def product_detail(request, id):
-    product = Product.objects.get(id=id)
+def product_detail(request, pk):
+    product = Product.objects.get(id=pk)
     context = {
         "product": product
     }

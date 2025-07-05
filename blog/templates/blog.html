@@ -1,0 +1,64 @@
+<!-- blog.html -->
+{% extends 'base.html' %}
+{% load my_tags %}
+{% block title %}
+Товары
+{% endblock %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Блог Skystore</h1>
+    <p class="lead">Теперь у Skystore появился блог!</p>
+    <a class="btn btn-primary" href="{%url 'blog:post_create' %}" role="button">Создать пост</a>
+</div>
+<div class="container">
+    <div class="row text-center">
+        {% for post in posts %}
+        <div class="col-3">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                  <img src="{{ post.preview | media_filter }}" class="card-img">
+                    <h4 class="my-0 font-weight-normal">{{ post.header | truncatechars:20 }}</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                        {{ post.content | truncatechars:100}}
+                    </ul>
+                    <a class="btn btn-primary" href="{%url 'blog:post_detail' post.id  %}" role="button">Посмотреть</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+        <div class="row">
+            <div class="col-12 col-md">
+                SkyStore
+                <small class="d-block mb-3 text-muted">&copy; 2023</small>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Категории</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Рассылки</a></li>
+                    <li><a class="text-muted" href="#">Телеграм боты</a></li>
+                    <li><a class="text-muted" href="#">Полезные утилиты</a></li>
+                    <li><a class="text-muted" href="#">Веб-приложения</a></li>
+                    <li><a class="text-muted" href="#">Микросервисы</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>Дополнительно</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">Мы пишем</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md">
+                <h5>О нас</h5>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="/contacts/">Контакты</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
+{% endblock %}

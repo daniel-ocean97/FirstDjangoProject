@@ -1,7 +1,8 @@
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse, reverse_lazy
+from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
+                                  UpdateView)
 
 from blog.models import Post
-from django.views.generic import ListView, CreateView, DetailView, DeleteView, UpdateView
 
 
 class BlogListView(ListView):
@@ -12,11 +13,13 @@ class BlogListView(ListView):
     def get_queryset(self):
         return super().get_queryset().filter(publication_attribute=True)
 
+
 class BlogCreateView(CreateView):
     model = Post
     fields = ["header", "content", "preview", "views_counter"]
     template_name = "blog_form.html"
     success_url = reverse_lazy("blog:blog")
+
 
 class BlogUpdateView(UpdateView):
     model = Post
@@ -25,7 +28,8 @@ class BlogUpdateView(UpdateView):
     success_url = reverse_lazy("blog:blog")
 
     def get_success_url(self):
-        return reverse('blog:post_detail', args=[self.kwargs.get("pk")])
+        return reverse("blog:post_detail", args=[self.kwargs.get("pk")])
+
 
 class BlogDetailView(DetailView):
     model = Post
@@ -38,7 +42,8 @@ class BlogDetailView(DetailView):
         self.object.save()
         return self.object
 
+
 class BlogDeleteView(DeleteView):
     model = Post
-    template_name = 'blog_confirm_delete.html'
-    success_url = reverse_lazy('blog:blog')
+    template_name = "blog_confirm_delete.html"
+    success_url = reverse_lazy("blog:blog")

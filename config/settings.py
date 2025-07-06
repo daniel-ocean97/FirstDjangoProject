@@ -10,9 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-from django.conf.global_settings import MEDIA_URL, MEDIA_ROOT
-from dotenv import load_dotenv
 import os
+
+from django.conf.global_settings import MEDIA_ROOT, MEDIA_URL
+from dotenv import load_dotenv
 
 # Загрузить переменные из .env
 load_dotenv()

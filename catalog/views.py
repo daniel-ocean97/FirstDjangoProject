@@ -1,9 +1,10 @@
 from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
-                                  TemplateView, UpdateView)
+                                  TemplateView, UpdateView, View)
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.core.exceptions import PermissionDenied
 from catalog.models import Product
+from django.shortcuts import get_object_or_404, redirect
 
 from .forms import ProductForm
 
@@ -31,6 +32,19 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     context_object_name = "product"
     template_name = "catalog_form.html"
     success_url = reverse_lazy("catalog:home")
+
+class UnpublishProductView(LoginRequiredMixin, View):
+    def post(self, request, product_pk):
+        product = get_object_or_404(Product, pk=product_pk)
+
+        if not request.user.has_perm("can_unpublish_product"):
+            raise PermissionDenied
+
+        product.is_published = False
+        product.save()
+
+        return redirect("catalog:home")
+
 
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):

@@ -53,6 +53,7 @@ class ProductForm(forms.ModelForm):
         price = self.cleaned_data.get("price")
         if price <= 0:
             raise ValidationError("Цена не может быть нулевой или отрицательной")
+        return price
 
     def clean(self):
         cleaned_data = super().clean()

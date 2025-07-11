@@ -1,7 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   TemplateView, UpdateView, View)
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from catalog.models import Product
 from django.shortcuts import get_object_or_404, redirect
@@ -33,6 +33,11 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     template_name = "catalog_form.html"
     success_url = reverse_lazy("catalog:home")
 
+    def form_valid(self, form):
+        # Устанавливаем текущего пользователя как владельца
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
 class UnpublishProductView(LoginRequiredMixin, View):
     def post(self, request, product_pk):
         product = get_object_or_404(Product, pk=product_pk)
@@ -54,8 +59,22 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "catalog_form.html"
     success_url = reverse_lazy("catalog:home")
 
+    def dispatch(self, request, *args, **kwargs):
+        if self.get_object().owner != request.user:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
 
-class ProductDeleteView(LoginRequiredMixin, DeleteView):
+
+class ProductDeleteView(PermissionRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Product
     template_name = "catalog_confirm_delete.html"
     success_url = reverse_lazy("catalog:home")
+    permission_required = 'catalog.delete_product'
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.get_object().owner != request.user:
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
+
+    def test_func(self):
+        return self.request.user.groups.filter(name='Moderators').exists()

@@ -1,4 +1,5 @@
 from django.db import models
+
 from config.settings import AUTH_USER_MODEL
 
 
@@ -35,8 +36,10 @@ class Product(models.Model):
         verbose_name_plural = "Товары"
         ordering = ("category", "price")
 
-        permissions = [("can_unpublish_product", "Can unpublish product"),
-                       ]
+        permissions = [
+            ("can_unpublish_product", "Can unpublish product"),
+        ]
+
 
 class Category(models.Model):
     name = models.CharField(max_length=150, verbose_name="Наименование")

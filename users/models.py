@@ -1,6 +1,6 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-from django.contrib.auth.models import AbstractUser
 
 class CatalogUser(AbstractUser):
     username = None
@@ -8,9 +8,10 @@ class CatalogUser(AbstractUser):
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     country = models.CharField(max_length=35, blank=True, null=True)
     avatar = models.ImageField(
-        verbose_name="Аватар", null=True, blank=True, upload_to="users_avatar/")
+        verbose_name="Аватар", null=True, blank=True, upload_to="users_avatar/"
+    )
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
     def __str__(self):

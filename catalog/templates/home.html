@@ -8,6 +8,9 @@
     <h1 class="display-4">Skystore</h1>
     <p class="lead">Skystore - это продвинутый магазин различной техники. От смартфонов до бытовой техники</p>
     <a class="btn btn-success" href="{%url 'catalog:product_create' %}" role="button">Загрузить товар</a>
+    <a href="{% url 'catalog:category_products' 2 %}">
+        Товары по категориям
+    </a>
 </div>
 <div class="container">
     <div class="row text-center">

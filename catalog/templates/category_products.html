@@ -1,0 +1,91 @@
+{# category_products.html #}
+{% extends "base.html" %}
+
+{% block title %}Товары категории {{ category.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <!-- Сайдбар с категориями -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    Категории
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% for cat in all_categories %}
+                    <li class="list-group-item {% if cat == category %}active{% endif %}">
+                        <a href="{% url 'catalog:category_products' cat.id %}">
+                            {{ cat.name }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Основной контент -->
+        <div class="col-md-9">
+            <h1 class="mb-4">Товары категории: {{ category.name }}</h1>
+            
+            {% if products %}
+                <div class="row">
+                    {% for product in products %}
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100">
+                            <img src="{{ product.image.url }}" 
+                                 class="card-img-top" 
+                                 alt="{{ product.name }}"
+                                 style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <p class="card-text">{{ product.price }} руб.</p>
+                                <a href="{% url 'catalog:product_detail' product.pk %}" 
+                                   class="btn btn-primary">
+                                    Подробнее
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+                <!-- Пагинация -->
+                {% if is_paginated %}
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" 
+                               href="?page={{ page_obj.previous_page_number }}">
+                                Назад
+                            </a>
+                        </li>
+                        {% endif %}
+                        
+                        <li class="page-item disabled">
+                            <span class="page-link">
+                                Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
+                            </span>
+                        </li>
+                        
+                        {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" 
+                               href="?page={{ page_obj.next_page_number }}">
+                                Вперед
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+            {% else %}
+                <div class="alert alert-info">
+                    В этой категории пока нет товаров
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

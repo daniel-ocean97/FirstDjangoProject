@@ -1,0 +1,20 @@
+<!-- blog_confirm_delete.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Удалить пост?"</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Удалить пост?</h1>
+        <p>Вы уверены, что хотите удалить "{{ object.header }}"?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Удалить</button>
+            <a href="{% url 'blog:blog' %}" class="btn btn-secondary">Отмена</a>
+        </form>
+    </div>
+    <script src="/static/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

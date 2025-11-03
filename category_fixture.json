@@ -1,0 +1,22 @@
+[
+{
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+        "name": "Смартфоны",
+        "description": "Современные смартфоны на каждый день",
+        "created_at": "2025-05-21",
+        "updated_at": "2025-05-21"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+        "name": "Бытовая техника",
+        "description": "Техника для помощи поддержания порядка в доме",
+        "created_at": "2025-05-21",
+        "updated_at": "2025-05-21"
+    }
+}
+]

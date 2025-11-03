@@ -1,0 +1,72 @@
+<!-- product_detail.html -->
+{% extends 'base.html' %}
+{% load catalog_tags %}
+{% block title %}Подробно о товаре {% endblock %}
+{% block content %}
+<section class="py-5 text-center container">
+    <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto"><h1 class="fw-light">Карточка товара</h1>
+            <p class="lead text-body-secondary">Здесь вы можете подробно рассмотреть товар и также купить его.</p>
+            <p>
+        </div>
+</section>
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <div class="col">
+                <div class="card shadow-sm">
+                    <img src="{{ product.image | media_filter }}">
+                    <div class="card-body"><p class="card-text">{{ product.name}}</p>
+                        <p class="card-text">{{ product.description}}</p>
+                        <p class="card-text">{{ product.price }} руб.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a class="btn btn-secondary" href="/home/" role="button">Назад</a>
+                            {% if user == product.owner %}
+                            <a class="btn btn-primary" href='{%url "catalog:product_update" pk=product.pk %}'
+                               role="button">Редактировать</a>
+                            <a class="btn btn-danger" href='{%url "catalog:product_delete" pk=product.pk %}'
+                               role="button">Удалить</a>
+                            {% endif %}
+                            <form action="{% url 'catalog:product_unpublish' product_pk=product.pk %}" method="post"
+                                  style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Снять с публикации</button>
+                            </form>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="pt-4 my-md-5 pt-md-5 border-top">
+            <div class="row">
+                <div class="col-12 col-md">
+                    SkyStore
+                    <small class="d-block mb-3 text-muted">&copy; 2023</small>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>Категории</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">Рассылки</a></li>
+                        <li><a class="text-muted" href="#">Телеграм боты</a></li>
+                        <li><a class="text-muted" href="#">Полезные утилиты</a></li>
+                        <li><a class="text-muted" href="#">Веб-приложения</a></li>
+                        <li><a class="text-muted" href="#">Микросервисы</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>Дополнительно</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">Мы пишем</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>О нас</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="/contacts/">Контакты</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+{% endblock %}
